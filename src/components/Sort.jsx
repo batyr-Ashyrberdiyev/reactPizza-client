@@ -2,7 +2,7 @@ import React from "react";
 
 import arrow from "../img/arrow.svg";
 
-function Sort({ sortActive, setSortActive }) {
+function Sort({ sortType, onChangeSort }) {
   const [sortOpen, setSortOpen] = React.useState(false);
   const [flip, setFlip] = React.useState(false);
   const sortText = [
@@ -11,16 +11,19 @@ function Sort({ sortActive, setSortActive }) {
     { name: "алфавит", sort: "title" },
   ];
 
-  const sortName = sortText[sortActive].name;
-
-  const onSortItem = (i) => {
-    setSortActive(i);
-  };
+  // const onSortItem = (i) => {
+  //   setSortActive(i);
+  // };
 
   const onSortText = () => {
     setFlip(!flip);
     setSortOpen(!sortOpen);
-    console.log(sortName);
+    console.log(sortType);
+  };
+
+  const changeSort = (obj) => {
+    onChangeSort(obj);
+    setSortOpen(false);
   };
 
   return (
@@ -34,16 +37,16 @@ function Sort({ sortActive, setSortActive }) {
         />
         <div className="h5">
           Сортировка по:
-          <span onClick={() => onSortText()}>{` ${sortText}`}</span>
+          <span onClick={() => onSortText()}>{sortType.name}</span>
           {sortOpen && (
             <div className="sort__block">
               {sortText.map((obj, i) => (
                 <div
                   key={i}
                   className={`sort__text ${
-                    sortActive.sort === obj.sort && "sort-active"
+                    sortType.sort === obj.sort && "sort-active"
                   }`}
-                  onClick={() => onSortItem(i)}
+                  onClick={() => changeSort(obj)}
                 >
                   {obj.name}
                 </div>
