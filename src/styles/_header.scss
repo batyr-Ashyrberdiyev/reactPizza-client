@@ -1,0 +1,46 @@
+.header {
+  padding: 40px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 0.5px solid $light-gray;
+}
+
+.header__col {
+  display: flex;
+
+  .logo {
+    margin-right: 20px;
+  }
+}
+
+.header__text {
+  font-weight: 400;
+  font-size: 14px;
+  color: $light-gray;
+}
+
+.header__btn {
+  display: flex;
+  align-items: center;
+  background-color: $orange;
+  padding: 15px 20px;
+  border-radius: 40px;
+  font-weight: 700;
+  gap: 15px;
+  color: white;
+}
+
+.header__cart {
+  display: flex;
+  align-items: center;
+
+  span {
+    display: flex;
+    align-items: center;
+
+    img {
+      margin-right: 5px;
+    }
+  }
+}

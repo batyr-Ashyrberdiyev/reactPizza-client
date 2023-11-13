@@ -1,0 +1,74 @@
+.pizza {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pizza > img {
+  margin-bottom: 10px;
+}
+
+.pizza__info {
+  display: flex;
+  flex-direction: column;
+  background-color: #f3f3f3;
+  margin-bottom: 15px;
+  border-radius: 10px;
+  padding: 5px 10px;
+
+  &.active {
+    background-color: white;
+    padding: 10px 20px;
+  }
+}
+
+.pizza__types {
+  display: flex;
+  gap: 10px;
+}
+
+.pizza__type {
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 20px 20px;
+  transition: background-color 0.3s;
+
+  &.active {
+    background-color: white;
+  }
+
+  &.disable {
+    opacity: 0.2;
+    pointer-events: none;
+  }
+}
+
+.pizza__title {
+  margin-bottom: 20px;
+  font-weight: 900;
+}
+
+.pizza__footer {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.pizza__btn {
+  display: flex;
+  cursor: pointer;
+  justify-content: space-between;
+  padding: 10px 20px 10px 0;
+  transition: all 0.3s;
+  @extend %button-border;
+
+  &:hover {
+    background-color: $orange;
+    color: white;
+  }
+
+  img {
+    margin: 0 10px 0 15px;
+  }
+}

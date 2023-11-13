@@ -1,0 +1,32 @@
+.drawer {
+  padding: 100px 0;
+}
+
+.drawer__container {
+  width: 100%;
+  max-width: 820px;
+  margin: 0 auto;
+}
+
+.drawer__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  .drawer__col {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .drawer__col:last-child {
+    cursor: pointer;
+    color: $light-gray;
+  }
+}
+
+.drawer__pizza {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
