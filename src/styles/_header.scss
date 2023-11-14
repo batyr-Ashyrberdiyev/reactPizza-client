@@ -14,6 +14,20 @@
   }
 }
 
+.header__input {
+  position: relative;
+  padding: 10px 15px;
+  border-radius: 10px;
+  border: 1px solid $light-gray;
+  left: -150px;
+  transition: all 0.3s linear;
+
+  &:focus {
+    outline: none;
+    width: 300px;
+  }
+}
+
 .header__text {
   font-weight: 400;
   font-size: 14px;

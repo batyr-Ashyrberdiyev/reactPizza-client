@@ -76,14 +76,14 @@
     font-weight: 500;
 
     &:hover {
-      background-color: $orange;
-      color: white;
+      background-color: #ffece6;
+      color: $orange;
     }
   }
 }
 .sort-active {
-  background-color: $orange;
-  color: white;
+  background-color: #ffece6;
+  color: $orange;
 }
 
 .pizzas__title {

@@ -2,7 +2,7 @@ import logo from "../img/logo.png";
 import cart from "../img/cart.svg";
 import { Link } from "react-router-dom";
 
-function Header({ active = false }) {
+function Header({ searchValue, setSearchValue }) {
   return (
     <div className="inner-container">
       <header className="header">
@@ -21,19 +21,24 @@ function Header({ active = false }) {
             </div>
           </div>
         </Link>
+        <input
+          className="header__input"
+          type="text"
+          placeholder="Поиск пицц"
+          onChange={(e) => e.target.value}
+          value={setSearchValue(searchValue)}
+        />
         <div className="header__col">
-          {active && (
-            <Link to="/drawer">
-              <button className="header__btn">
-                <div className="header__price">520 Р.</div>
-                <div className="header__cart">
-                  <span>
-                    <img src={cart} alt="" /> <p>3</p>
-                  </span>
-                </div>
-              </button>
-            </Link>
-          )}
+          <Link to="/drawer">
+            <button className="header__btn">
+              <div className="header__price">520 Р.</div>
+              <div className="header__cart">
+                <span>
+                  <img src={cart} alt="" /> <p>3</p>
+                </span>
+              </div>
+            </button>
+          </Link>
         </div>
       </header>
     </div>

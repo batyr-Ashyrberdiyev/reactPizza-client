@@ -12,7 +12,6 @@ function Drawer() {
 
   return (
     <>
-      <Header />
       <div className="drawer">
         <div className="drawer__container">
           <div className="drawer__header">
@@ -54,7 +53,7 @@ function Drawer() {
             </div>
           </div>
           <div className="drawer__wrapper">
-            {cartPizza.map((item) => (
+            {[].map((item) => (
               <div className="drawer__pizza">
                 <img src={item.img} alt="Pizza" />
                 <div className="drawer__info">

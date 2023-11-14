@@ -2,7 +2,8 @@ import React from "react";
 import "./styles/main.scss";
 import Home from "./pages/Home";
 import Drawer from "./pages/Drawer";
-import { Routes, Route, json } from "react-router-dom";
+import Header from "./components/Header";
+import { Routes, Route } from "react-router-dom";
 
 import pizza1 from "./img/pizza/1.png";
 import pizza2 from "./img/pizza/2.png";
@@ -42,13 +43,24 @@ import { AppContext } from "./components/context";
 // },
 
 function App() {
+  const [searchValue, setSearchValue] = React.useState("");
+
   return (
     <AppContext.Provider value={{}}>
       <div className="bg">
         <div className="container">
           <div className="wrapper">
+            <Header searchValue={searchValue} setSearchValue={setSearchValue} />
             <Routes>
-              <Route path="/" element={<Home />}></Route>
+              <Route
+                path="/"
+                element={
+                  <Home
+                    searchValue={searchValue}
+                    setSearchValue={setSearchValue}
+                  />
+                }
+              ></Route>
               <Route path="/drawer" element={<Drawer />}></Route>
             </Routes>
           </div>

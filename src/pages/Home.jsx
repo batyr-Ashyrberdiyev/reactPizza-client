@@ -1,10 +1,8 @@
 import React from "react";
 
-import Header from "../components/Header";
 import Pizza from "../components/Pizza";
 import Sort from "../components/Sort";
 import Skeleton from "../components/Skeleton";
-
 import { AppContext } from "../components/context";
 
 function Home() {
@@ -30,7 +28,7 @@ function Home() {
     fetch(
       `https://654e515bcbc325355742bd6a.mockapi.io/items?${
         categoryId > 0 ? `category=${categoryId}` : ""
-      }&sortBy=${sortType.sort}&order=asc`
+      }&sortBy=${sortType.sort}&order=desc`
     )
       .then((res) => res.json())
       .then((arr) => {
@@ -42,7 +40,6 @@ function Home() {
 
   return (
     <>
-      <Header active />
       <div className="home">
         <div className="inner-container">
           <div className="home__header">
@@ -64,7 +61,13 @@ function Home() {
             <div className="pizzas__block">
               {isLoading
                 ? [...new Array(3)].map((_, i) => <Skeleton key={i} />)
-                : items.map((item) => <Pizza key={item.title} {...item} />)}
+                : items
+                    .filter((pizza) =>
+                      pizza.title
+                        .toLowerCase()
+                        .includes(pizza.title.toLowerCase())
+                    )
+                    .map((item) => <Pizza key={item.title} {...item} />)}
             </div>
           </div>
         </div>
