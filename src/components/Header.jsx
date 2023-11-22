@@ -25,8 +25,8 @@ function Header({ searchValue, setSearchValue }) {
           className="header__input"
           type="text"
           placeholder="Поиск пицц"
-          onChange={(e) => e.target.value}
-          value={setSearchValue(searchValue)}
+          onChange={(e) => setSearchValue(e.target.value)}
+          value={searchValue}
         />
         <div className="header__col">
           <Link to="/drawer">

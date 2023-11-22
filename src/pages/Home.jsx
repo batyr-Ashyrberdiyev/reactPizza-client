@@ -1,11 +1,16 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { setCategoryId, setSortType } from "../redux/slices/filterSlice";
 
 import Pizza from "../components/Pizza";
 import Sort from "../components/Sort";
 import Skeleton from "../components/Skeleton";
-import { AppContext } from "../components/context";
 
-function Home() {
+function Home({ searchValue }) {
+  const categoryId = useSelector((state) => state.filter.categoryId);
+  const sortType = useSelector((state) => state.filter.type);
+  const dispatch = useDispatch();
+
   const category = [
     "Все",
     "Мясные",
@@ -14,21 +19,16 @@ function Home() {
     "Острые",
     "Закрытые",
   ];
-  const [sortType, setSortType] = React.useState({
-    name: "популярность",
-    sort: "rating",
-  });
-  const [categoryId, setCategoryId] = React.useState(0);
   const [items, setItems] = React.useState([]);
-  const [cartPizza, setCartPizza] = React.useState([]);
   const [isLoading, setIsLoading] = React.useState(true);
+
+  const getCategory = categoryId > 0 ? `category=${categoryId}` : "";
+  const getSearch = searchValue > 0 ? `&search=${searchValue}` : "";
 
   React.useEffect(() => {
     setIsLoading(true);
     fetch(
-      `https://654e515bcbc325355742bd6a.mockapi.io/items?${
-        categoryId > 0 ? `category=${categoryId}` : ""
-      }&sortBy=${sortType.sort}&order=desc`
+      `https://654e515bcbc325355742bd6a.mockapi.io/items?${getCategory}&sortBy=${sortType.sort}&order=desc${getSearch}`
     )
       .then((res) => res.json())
       .then((arr) => {
@@ -36,7 +36,7 @@ function Home() {
         setIsLoading(false);
       });
     window.scrollTo(0, 0);
-  }, [categoryId, sortType]);
+  }, [categoryId, sortType, searchValue]);
 
   return (
     <>
@@ -48,13 +48,13 @@ function Home() {
                 <div
                   key={i}
                   className={`category ${categoryId === i && "active"}`}
-                  onClick={() => setCategoryId(i)}
+                  onClick={(i) => dispatch(setCategoryId(i))}
                 >
                   {item}
                 </div>
               ))}
             </div>
-            <Sort sortType={sortType} onChangeSort={(id) => setSortType(id)} />
+            <Sort />
           </div>
           <h1 className="pizzas__title h1">Все пиццы</h1>
           <div className="pizzas">
@@ -62,11 +62,17 @@ function Home() {
               {isLoading
                 ? [...new Array(3)].map((_, i) => <Skeleton key={i} />)
                 : items
-                    .filter((pizza) =>
-                      pizza.title
-                        .toLowerCase()
-                        .includes(pizza.title.toLowerCase())
-                    )
+                    .filter((pizza) => {
+                      if (
+                        pizza.title
+                          .toLowerCase()
+                          .includes(searchValue.toLowerCase())
+                      ) {
+                        return true;
+                      }
+
+                      return false;
+                    })
                     .map((item) => <Pizza key={item.title} {...item} />)}
             </div>
           </div>

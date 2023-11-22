@@ -1,9 +1,14 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { setSortType } from "../redux/slices/filterSlice";
 
 import arrow from "../img/arrow.svg";
 
-function Sort({ sortType, onChangeSort }) {
-  const [sortOpen, setSortOpen] = React.useState(false);
+function Sort() {
+  const dispatch = useDispatch();
+  const sortType = useSelector((state) => state.filter.type);
+
+  const [open, setOpen] = React.useState(false);
   const [flip, setFlip] = React.useState(false);
   const sortText = [
     { name: "популярность", sort: "rating" },
@@ -11,19 +16,14 @@ function Sort({ sortType, onChangeSort }) {
     { name: "алфавит", sort: "title" },
   ];
 
-  // const onSortItem = (i) => {
-  //   setSortActive(i);
-  // };
-
   const onSortText = () => {
     setFlip(!flip);
-    setSortOpen(!sortOpen);
-    console.log(sortType);
+    setOpen(!open);
   };
 
-  const changeSort = (obj) => {
-    onChangeSort(obj);
-    setSortOpen(false);
+  const onClickListItem = (obj) => {
+    dispatch(setSortType(obj));
+    setOpen(false);
   };
 
   return (
@@ -38,7 +38,7 @@ function Sort({ sortType, onChangeSort }) {
         <div className="h5">
           Сортировка по:
           <span onClick={() => onSortText()}>{sortType.name}</span>
-          {sortOpen && (
+          {open && (
             <div className="sort__block">
               {sortText.map((obj, i) => (
                 <div
@@ -46,7 +46,7 @@ function Sort({ sortType, onChangeSort }) {
                   className={`sort__text ${
                     sortType.sort === obj.sort && "sort-active"
                   }`}
-                  onClick={() => changeSort(obj)}
+                  onClick={() => onClickListItem(obj)}
                 >
                   {obj.name}
                 </div>

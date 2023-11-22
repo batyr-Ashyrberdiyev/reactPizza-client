@@ -6,11 +6,6 @@ function Pizza({ img, title, price, types, sizes, disabled, addInCart }) {
   const [activeType, setActiveType] = React.useState(0);
   // const [disableType, setDisableType] = React.useState();
 
-  const onAdd = () => {
-    addInCart({ img, title, price });
-    console.log(title);
-  };
-
   return (
     <div className="pizza">
       <img src={img} width={260} alt="Pizza" />
@@ -43,7 +38,7 @@ function Pizza({ img, title, price, types, sizes, disabled, addInCart }) {
       </div>
       <div className="pizza__footer">
         <div className="pizza__price">от {price} руб.</div>
-        <div className="pizza__btn" onClick={() => onAdd()}>
+        <div className="pizza__btn">
           <img src={add_orange} alt="" />
           <p>Добавить</p>
         </div>
