@@ -14,17 +14,22 @@
   }
 }
 
-.header__input {
+.input__block {
   position: relative;
-  padding: 10px 15px;
-  border-radius: 10px;
-  border: 1px solid $light-gray;
   left: -150px;
-  transition: all 0.3s linear;
 
-  &:focus {
-    outline: none;
-    width: 300px;
+  .header__input {
+    padding: 10px 15px;
+    border-radius: 10px;
+    border: 1px solid $light-gray;
+
+    img {
+      cursor: pointer;
+    }
+
+    &:focus {
+      outline: none;
+    }
   }
 }
 

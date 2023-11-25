@@ -2,7 +2,9 @@ import logo from "../img/logo.png";
 import cart from "../img/cart.svg";
 import { Link } from "react-router-dom";
 
-function Header({ searchValue, setSearchValue }) {
+import Input from "./Input";
+
+function Header() {
   return (
     <div className="inner-container">
       <header className="header">
@@ -21,13 +23,7 @@ function Header({ searchValue, setSearchValue }) {
             </div>
           </div>
         </Link>
-        <input
-          className="header__input"
-          type="text"
-          placeholder="Поиск пицц"
-          onChange={(e) => setSearchValue(e.target.value)}
-          value={searchValue}
-        />
+        <Input />
         <div className="header__col">
           <Link to="/drawer">
             <button className="header__btn">

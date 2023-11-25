@@ -49,7 +49,7 @@ function App() {
   const [searchValue, setSearchValue] = React.useState("");
 
   return (
-    <AppContext.Provider value={{}}>
+    <AppContext.Provider value={{ searchValue, setSearchValue }}>
       <div className="bg">
         <div className="container">
           <div className="wrapper">
