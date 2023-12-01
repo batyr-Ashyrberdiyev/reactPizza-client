@@ -12,6 +12,7 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-bottom: 50px;
 
   .drawer__col {
     display: flex;
@@ -25,8 +26,21 @@
   }
 }
 
+.drawer__wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
+
 .drawer__pizza {
   display: flex;
   align-items: center;
   justify-content: space-between;
+}
+
+.drawer__count {
+  display: flex;
+  align-items: center;
+  font-size: 24px;
+  gap: 30px;
 }

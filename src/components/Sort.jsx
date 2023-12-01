@@ -1,33 +1,44 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setSortType } from "../redux/slices/filterSlice";
+import { setSort } from "../redux/slices/filterSlice";
 
+import { AppContext } from "./context";
 import arrow from "../img/arrow.svg";
 
 function Sort() {
+  const { sortList } = React.useContext(AppContext);
+  const sort = useSelector((state) => state.filter.sort);
   const dispatch = useDispatch();
-  const sortType = useSelector((state) => state.filter.type);
+  const sortRef = React.useRef();
 
   const [open, setOpen] = React.useState(false);
   const [flip, setFlip] = React.useState(false);
-  const sortText = [
-    { name: "популярность", sort: "rating" },
-    { name: "цена", sort: "price" },
-    { name: "алфавит", sort: "title" },
-  ];
 
   const onSortText = () => {
     setFlip(!flip);
     setOpen(!open);
   };
 
+  React.useEffect(() => {
+    const handleClickOutside = (event) => {
+      if (sortRef.current && !sortRef.current.contains(event.target)) {
+        setOpen(false);
+        setFlip(false);
+      }
+    };
+
+    document.body.addEventListener("click", handleClickOutside);
+
+    return () => document.body.removeEventListener("click", handleClickOutside);
+  }, []);
+
   const onClickListItem = (obj) => {
-    dispatch(setSortType(obj));
+    dispatch(setSort(obj));
     setOpen(false);
   };
 
   return (
-    <div className="sort">
+    <div className="sort" ref={sortRef}>
       <div className="sort__header">
         <img
           className={`sort__arrow ${flip && "flip"}`}
@@ -37,14 +48,14 @@ function Sort() {
         />
         <div className="h5">
           Сортировка по:
-          <span onClick={() => onSortText()}>{sortType.name}</span>
+          <span onClick={() => onSortText()}>{sort.name}</span>
           {open && (
             <div className="sort__block">
-              {sortText.map((obj, i) => (
+              {sortList.map((obj, i) => (
                 <div
-                  key={i}
+                  key={obj.sortProperty}
                   className={`sort__text ${
-                    sortType.sort === obj.sort && "sort-active"
+                    sort.sortProperty === obj.sortProperty && "sort-active"
                   }`}
                   onClick={() => onClickListItem(obj)}
                 >

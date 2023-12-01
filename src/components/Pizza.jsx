@@ -1,10 +1,26 @@
 import add_orange from "../img/add-orange.svg";
 import React from "react";
 
-function Pizza({ img, title, price, types, sizes, disabled, addInCart }) {
+import { addItem } from "../redux/slices/cartSlice";
+import { useDispatch, useSelector } from "react-redux";
+
+function Pizza({ img, title, price, types, sizes, disabled }) {
+  const dispatch = useDispatch();
+  const cartItem = useSelector((state) =>
+    state.cart.items.find((obj) => obj.title === title)
+  );
   const typeNames = ["тонкое", "традиционное"];
   const [activeType, setActiveType] = React.useState(0);
-  // const [disableType, setDisableType] = React.useState();
+
+  const addCount = cartItem ? cartItem.count : 0;
+
+  const onClickAdd = () => {
+    const item = { title, price, img };
+
+    dispatch(addItem(item));
+
+    console.log(item);
+  };
 
   return (
     <div className="pizza">
@@ -14,7 +30,7 @@ function Pizza({ img, title, price, types, sizes, disabled, addInCart }) {
         <div className="pizza__types">
           {types.map((typeId) => (
             <div
-              key={types.title}
+              key={typeId}
               onClick={() => setActiveType(typeId)}
               className={`pizza__type ${
                 activeType === typeId
@@ -38,9 +54,9 @@ function Pizza({ img, title, price, types, sizes, disabled, addInCart }) {
       </div>
       <div className="pizza__footer">
         <div className="pizza__price">от {price} руб.</div>
-        <div className="pizza__btn">
+        <div className="pizza__btn" onClick={onClickAdd}>
           <img src={add_orange} alt="" />
-          <p>Добавить</p>
+          <p>Добавить {addCount > 0 && addCount}</p>
         </div>
       </div>
     </div>

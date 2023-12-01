@@ -1,14 +1,18 @@
 import React from "react";
+
 import Header from "../components/Header";
+import CartItem from "../components/cartItem";
+import { AppContext } from "../components/context";
+import { useSelector, useDispatch } from "react-redux";
+
 import cart from "../img/cart.svg";
 import trash from "../img/trash.svg";
 import drawer_ from "../img/drawer_.svg";
 import drawer_add from "../img/drawer_add.svg";
 import remove from "../img/drawer_remove.svg";
-import { AppContext } from "../components/context";
 
 function Drawer() {
-  const { cartPizza } = React.useContext(AppContext);
+  const items = useSelector((state) => state.cart.items);
 
   return (
     <>
@@ -53,20 +57,8 @@ function Drawer() {
             </div>
           </div>
           <div className="drawer__wrapper">
-            {[].map((item) => (
-              <div className="drawer__pizza">
-                <img src={item.img} alt="Pizza" />
-                <div className="drawer__info">
-                  <div className="drawer__name">{item.title}</div>
-                  <div className="drawer__text">{item.types}</div>
-                </div>
-                <div className="drawer__count">
-                  <img src={drawer_} alt="" />
-                  <img src={drawer_add} alt="" />
-                </div>
-                <div className="drawer__price"></div>
-                <img src={remove} alt="" />
-              </div>
+            {items.map((item) => (
+              <CartItem {...item} />
             ))}
           </div>
         </div>

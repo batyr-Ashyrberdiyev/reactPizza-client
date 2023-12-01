@@ -1,17 +1,11 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
 
 import "./styles/main.scss";
 
 import Home from "./pages/Home";
 import Drawer from "./pages/Drawer";
 import Header from "./components/Header";
-
-import pizza1 from "./img/pizza/1.png";
-import pizza2 from "./img/pizza/2.png";
-import pizza3 from "./img/pizza/3.png";
-import pizza4 from "./img/pizza/4.png";
 
 import { AppContext } from "./components/context";
 
@@ -47,9 +41,14 @@ import { AppContext } from "./components/context";
 
 function App() {
   const [searchValue, setSearchValue] = React.useState("");
+  const sortList = [
+    { name: "популярность", sortProperty: "rating" },
+    { name: "цена", sortProperty: "price" },
+    { name: "алфавит", sortProperty: "title" },
+  ];
 
   return (
-    <AppContext.Provider value={{ searchValue, setSearchValue }}>
+    <AppContext.Provider value={{ searchValue, setSearchValue, sortList }}>
       <div className="bg">
         <div className="container">
           <div className="wrapper">

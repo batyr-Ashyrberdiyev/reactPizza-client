@@ -53,13 +53,21 @@
 .header__cart {
   display: flex;
   align-items: center;
+  position: relative;
 
   span {
     display: flex;
     align-items: center;
-
-    img {
-      margin-right: 5px;
-    }
+    gap: 5px;
   }
+}
+
+.header__btn-line {
+  position: absolute;
+  top: -5px;
+  left: -5px;
+  width: 1px;
+  height: 30px;
+  background-color: white;
+  opacity: 0.3;
 }
