@@ -5,6 +5,7 @@ import qs from "qs";
 
 import { useSelector, useDispatch } from "react-redux";
 import { setCategoryId, setFilters } from "../redux/slices/filterSlice";
+import { fetchPizzas } from "../redux/slices/pizzaSlice";
 
 import Pizza from "../components/Pizza";
 import Sort from "../components/Sort";
@@ -14,6 +15,7 @@ import { AppContext } from "../components/context";
 function Home({ searchValue }) {
   const { sortList } = React.useContext(AppContext);
   const { categoryId, sort } = useSelector((state) => state.filter);
+  const { items, status } = useSelector((state) => state.pizza);
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -26,11 +28,14 @@ function Home({ searchValue }) {
     "Закрытые",
   ];
 
-  const [items, setItems] = React.useState([]);
-  const [isLoading, setIsLoading] = React.useState(true);
+  const getPizzas = async () => {
+    const getCategory = categoryId ? `category=${categoryId}` : "";
+    const getSearch = searchValue ? `&search=${searchValue}` : "";
 
-  const getCategory = categoryId ? `category=${categoryId}` : "";
-  const getSearch = searchValue ? `&search=${searchValue}` : "";
+    dispatch(fetchPizzas({ getCategory, getSearch, sort }));
+
+    window.scrollTo(0, 0);
+  };
 
   // React.useEffect(() => {
   //   console.log(window.location.search, "useEffect");
@@ -45,17 +50,7 @@ function Home({ searchValue }) {
   // }, []);
 
   React.useEffect(() => {
-    setIsLoading(true);
-
-    axios
-      .get(
-        `https://654e515bcbc325355742bd6a.mockapi.io/items?${getCategory}&sortBy=${sort.sortProperty}&order=asc${getSearch}`
-      )
-      .then((res) => {
-        setItems(res.data);
-        setIsLoading(false);
-      });
-    window.scrollTo(0, 0);
+    getPizzas();
   }, [categoryId, sort.sortProperty, searchValue]);
 
   // React.useEffect(() => {
@@ -88,7 +83,7 @@ function Home({ searchValue }) {
           <h1 className="pizzas__title h1">Все пиццы</h1>
           <div className="pizzas">
             <div className="pizzas__block">
-              {isLoading
+              {status === "loading"
                 ? [...new Array(3)].map((_, i) => <Skeleton key={i} />)
                 : items
                     .filter((pizza) => {
@@ -102,7 +97,7 @@ function Home({ searchValue }) {
 
                       return false;
                     })
-                    .map((item) => <Pizza key={item.title} {...item} />)}
+                    .map((item) => <Pizza key={item.id} {...item} />)}
             </div>
           </div>
         </div>
